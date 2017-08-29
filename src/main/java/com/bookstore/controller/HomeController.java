@@ -93,7 +93,7 @@ public class HomeController {
 		model.addAttribute("forgetPasswordEmailSent",true);
 		return "myAccount"	;
 	}
-	
+	//this is called when user sign ups
 	@RequestMapping(value="/newUser",method=RequestMethod.POST)
 	public String newUserPost(HttpServletRequest request,
 			@ModelAttribute("email")String userEmail,

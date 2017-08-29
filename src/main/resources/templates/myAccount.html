@@ -27,7 +27,7 @@
 							style="color: red;">Create new account</span></a></li>
 					<li th:classappend="${classActiveLogin}? 'in active'"><a href="#tab-2" data-toggle="tab"><span
 							style="color: red;">Log in</span></a></li>
-					<li th:classappend="${classActiveForgotPassword}? 'in active'"><a href="#tab-3" data-toggle="tab"><span
+					<li th:classappend="${classActiveForgetPassword}? 'in active'"><a href="#tab-3" data-toggle="tab"><span
 							style="color: red;">Forget Password</span></a></li>
 				</ul>
 
@@ -103,14 +103,15 @@
 					</div>
 					
 					<!-- forget password -->
-					<div class="tab-pane fade" id="tab-3" th:classappend="${classActiveForgotPassword}? 'in active'">
+					<div class="tab-pane fade" id="tab-3" 
+					th:classappend="${classActiveForgetPassword}? 'in active'">
 						<div class="panel-group">
 							<div class="panel panel-default" style="border: none;">
 								<div class="panel-body"
 									style="background-color: #ededed; margin-top: 20px;">
 									<div th:if="${emailNotExist}" class="alert alert-danger">Email doesn't exist.</div>
 									<div th:if="${forgetPasswordEmailSent}" class="alert alert-success">Email sent.</div>
-									<form>
+									<form th:action="@{/forgetPassword}" method="post">
 										<div class="form-group">
 											<label for="recoverEmail">* Your Email: </label> <input
 												required="required" type="text" class="form-control"
