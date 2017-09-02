@@ -4,43 +4,50 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-
-<title>Bookstore</title>
+<title>Le's Bookstore</title>
 
 <!-- Bootstrap core CSS -->
 <link href="/css/bootstrap.min.css" rel="stylesheet" />
 
 <link href="/css/non-responsive.css" rel="stylesheet" />
+
+<!-- data table -->
+<link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
 <!-- Custom styles for this template -->
 <link href="/css/style.css" rel="stylesheet" />
 
-<link rel="icon" href="/image/apple-touch-icon.png" />
+<link rel="icon" href="/image/applie-touch-icon.png" />
 </head>
 
 <body>
 	<div th:fragment="navbar">
 		<div class="page-top"
-			style="width: 100%; height: 20px; background-color: #f46b42"></div>
+			style="width: 100%; height: 20px; background-color: #f46b42;"></div>
 		<!-- Static navbar -->
 		<nav class="navbar navbar-default navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="#">My Bookstore</a>
+					<a class="navbar-brand" href="#">LE'S BOOKSTORE</a>
 				</div>
 				<div id="navbar">
 					<ul class="nav navbar-nav navbar-left">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
+						<li class="dropdown"><a th:href="@{/bookshelf}" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">Books <span class="caret"></span></a>
+							aria-expanded="false">BOOKS <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a th:href="@{/bookshelf}">Browse the bookshelf</a></li>
-								<li><a href="#">Store hours &#38;Directions</a></li>
+								<li><a href="#">Store hours &#38; Directions</a></li>
 								<li><a href="#">FAQ</a></li>
+
 							</ul></li>
 						<form class="navbar-form">
 							<div class="form-group">
 								<input type="text" name="keyword" class="form-control"
-									placeholder="Book Title" />
+									placeholder="Book title" />
 							</div>
 							<button type="submit" class="btn btn-default">Search</button>
 						</form>
@@ -56,13 +63,15 @@
 			</div>
 			<!--/.container-fluid -->
 		</nav>
-	</div> 
+	</div>
 	
-	<!-- Placed at the end of the document so the pages load faster -->
 	<div th:fragment="body-bottom-scripts">
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="/js/bootstrap.min.js"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	
+	<!-- data table -->
+		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
 	</div>
 </body>
 </html>
