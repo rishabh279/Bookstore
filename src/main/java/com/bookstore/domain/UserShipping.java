@@ -9,91 +9,120 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class UserShipping {
-
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	Long id;
-	private String userBillingName;
-	private String userBillingStreet1;
-	private String userBillingStreet2;
-	private String userBillingCity;
-	private String userBillingState;
-	private String userBillingCountry;
-	private String userBillingZipCode;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private String userShippingName;
+	private String userShippingStreet1;
+	private String userShippingStreet2;
+	private String userShippingCity;
+	private String userShippingState;
+	private String userShippingCountry;
+	private String userShippingZipcode;
+	private boolean userShippingDefault;
+	
 	
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
+
 
 	public Long getId() {
 		return id;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getUserBillingName() {
-		return userBillingName;
+
+	public String getUserShippingName() {
+		return userShippingName;
 	}
 
-	public void setUserBillingName(String userBillingName) {
-		this.userBillingName = userBillingName;
+
+	public void setUserShippingName(String userShippingName) {
+		this.userShippingName = userShippingName;
 	}
 
-	public String getUserBillingStreet1() {
-		return userBillingStreet1;
+
+	public String getUserShippingStreet1() {
+		return userShippingStreet1;
 	}
 
-	public void setUserBillingStreet1(String userBillingStreet1) {
-		this.userBillingStreet1 = userBillingStreet1;
+
+	public void setUserShippingStreet1(String userShippingStreet1) {
+		this.userShippingStreet1 = userShippingStreet1;
 	}
 
-	public String getUserBillingStreet2() {
-		return userBillingStreet2;
+
+	public String getUserShippingStreet2() {
+		return userShippingStreet2;
 	}
 
-	public void setUserBillingStreet2(String userBillingStreet2) {
-		this.userBillingStreet2 = userBillingStreet2;
+
+	public void setUserShippingStreet2(String userShippingStreet2) {
+		this.userShippingStreet2 = userShippingStreet2;
 	}
 
-	public String getUserBillingCity() {
-		return userBillingCity;
+
+	public String getUserShippingCity() {
+		return userShippingCity;
 	}
 
-	public void setUserBillingCity(String userBillingCity) {
-		this.userBillingCity = userBillingCity;
+
+	public void setUserShippingCity(String userShippingCity) {
+		this.userShippingCity = userShippingCity;
 	}
 
-	public String getUserBillingState() {
-		return userBillingState;
+
+	public String getUserShippingState() {
+		return userShippingState;
 	}
 
-	public void setUserBillingState(String userBillingState) {
-		this.userBillingState = userBillingState;
+
+	public void setUserShippingState(String userShippingState) {
+		this.userShippingState = userShippingState;
 	}
 
-	public String getUserBillingCountry() {
-		return userBillingCountry;
+
+	public String getUserShippingCountry() {
+		return userShippingCountry;
 	}
 
-	public void setUserBillingCountry(String userBillingCountry) {
-		this.userBillingCountry = userBillingCountry;
+
+	public void setUserShippingCountry(String userShippingCountry) {
+		this.userShippingCountry = userShippingCountry;
 	}
 
-	public String getUserBillingZipCode() {
-		return userBillingZipCode;
+
+	public String getUserShippingZipcode() {
+		return userShippingZipcode;
 	}
 
-	public void setUserBillingZipCode(String userBillingZipCode) {
-		this.userBillingZipCode = userBillingZipCode;
+
+	public void setUserShippingZipcode(String userShippingZipcode) {
+		this.userShippingZipcode = userShippingZipcode;
 	}
+
 
 	public User getUser() {
 		return user;
 	}
 
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public boolean isUserShippingDefault() {
+		return userShippingDefault;
+	}
+
+
+	public void setUserShippingDefault(boolean userShippingDefault) {
+		this.userShippingDefault = userShippingDefault;
+	}
+	
 }
