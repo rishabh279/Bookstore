@@ -1,4 +1,4 @@
-package com.adminportal.domain.security;
+package com.bookstore.domain.security;
 
 import org.springframework.security.core.GrantedAuthority;
 

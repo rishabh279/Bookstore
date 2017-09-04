@@ -1,5 +1,6 @@
 package com.bookstore.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookstore.domain.ShoppingCart;
 import com.bookstore.domain.User;
 import com.bookstore.domain.UserBilling;
 import com.bookstore.domain.UserPayment;
@@ -71,7 +73,14 @@ public class UserServiceImpl implements UserService {
 			for (UserRole ur : userRoles) {
 				roleRepository.save(ur.getRole());
 			}
-
+			
+			ShoppingCart shoppingCart = new ShoppingCart();
+			shoppingCart.setUser(user);
+			user.setShoppingCart(shoppingCart);
+			
+			user.setUserShippingList(new ArrayList<UserShipping>());
+			user.setUserPaymentList(new ArrayList<UserPayment>());
+			
 			user.getUserRoles().addAll(userRoles);
 
 			localUser = userRepository.save(user);

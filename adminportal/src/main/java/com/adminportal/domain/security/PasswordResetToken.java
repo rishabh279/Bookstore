@@ -1,7 +1,6 @@
-package com.adminportal.domain.security;
+package com.bookstore.domain.security;
 
 import java.util.Calendar;
-
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -12,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import com.adminportal.domain.User;
+import com.bookstore.domain.User;
 
 @Entity
 public class PasswordResetToken {

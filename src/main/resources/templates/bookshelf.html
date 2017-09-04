@@ -50,7 +50,7 @@
 											<a th:href="@{/bookDetail?id=}+${book.id}"><h4
 													th:text="${book.title}"></h4></a> <span
 												th:text="${book.publicationDate}"></span>
-											<p th:text="book.author"></p>
+											<p th:text="${book.author}"></p>
 											<a th:href="@{/bookDetail?id=}+${book.id}"><span
 												th:text="${#strings.capitalize(book.format)}"></span></a> <span
 												th:text="${book.numberOfPages}"><span> pages</span></span> <a

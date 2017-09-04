@@ -1,4 +1,4 @@
-package com.adminportal.domain.security;
+package com.bookstore.domain.security;
 
 import java.util.HashSet;
 import java.util.Set;
