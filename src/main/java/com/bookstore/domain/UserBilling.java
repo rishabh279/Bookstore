@@ -1,7 +1,6 @@
 package com.bookstore.domain;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,10 +9,10 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class UserBilling {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private String userBillingName;
 	private String userBillingStreet1;
 	private String userBillingStreet2;
@@ -80,7 +79,7 @@ public class UserBilling {
 	public void setUserBillingCountry(String userBillingCountry) {
 		this.userBillingCountry = userBillingCountry;
 	}
-	
+
 	public String getUserBillingZipcode() {
 		return userBillingZipcode;
 	}
@@ -95,7 +94,7 @@ public class UserBilling {
 
 	public void setUserPayment(UserPayment userPayment) {
 		this.userPayment = userPayment;
-	} 
+	}
 	
 	
 }

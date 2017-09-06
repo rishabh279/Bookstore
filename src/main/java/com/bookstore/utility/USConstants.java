@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 public class USConstants {
-	public final static String US="US";
 	
-	public final static Map<String ,String> mapOfUSStates = new HashMap<String,String>(){
-		
+	public final static String US = "US";
+	
+	public final static Map<String, String> mapOfUSStates = new HashMap<String, String>() {
 		{
 			put("AL", "Alabama");
 			put("AK", "Alaska");
@@ -64,6 +64,8 @@ public class USConstants {
             put("WY", "Wyoming");
 		}
 	};
-	public final static List<String> listOfUSStatesCodes = new ArrayList<>(mapOfUSStates.keySet());
-	public final static List<String> listOfUSStatesNames = new ArrayList<>(mapOfUSStates.values());
+	
+	public final static List<String> listOfUSStatesCode = new ArrayList<>(mapOfUSStates.keySet());
+	public final static List<String> listOfUSStatesName = new ArrayList<>(mapOfUSStates.values());
+
 }

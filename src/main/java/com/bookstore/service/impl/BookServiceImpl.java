@@ -12,14 +12,13 @@ import com.bookstore.service.BookService;
 @Service
 public class BookServiceImpl implements BookService{
 	@Autowired
-	BookRepository bookRepository;
-	@Override
+	private BookRepository bookRepository;
+	
 	public List<Book> findAll() {
 		return (List<Book>) bookRepository.findAll();
 	}
-	@Override
+	
 	public Book findOne(Long id) {
-		// TODO Auto-generated method stub
 		return bookRepository.findOne(id);
 	}
 

@@ -9,9 +9,9 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class BookToCartItem {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@ManyToOne
@@ -45,4 +45,6 @@ public class BookToCartItem {
 	public void setCartItem(CartItem cartItem) {
 		this.cartItem = cartItem;
 	}
+	
+	
 }

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstore.domain.ShoppingCart;
 import com.bookstore.domain.User;
@@ -24,55 +25,64 @@ import com.bookstore.repository.UserShippingRepository;
 import com.bookstore.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
+	
 	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
-
-	@Autowired
-	private RoleRepository roleRepository;
-
+	
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Autowired
-	private PasswordResetTokenRepository passwordResetTokenRepository;
-
+	private RoleRepository roleRepository;
+	
 	@Autowired
 	private UserPaymentRepository userPaymentRepository;
 	
 	@Autowired
 	private UserShippingRepository userShippingRepository;
-
+	
+	@Autowired
+	private PasswordResetTokenRepository passwordResetTokenRepository;
+	
 	@Override
-	public PasswordResetToken getPasswordResetToken(String token) {
+	public PasswordResetToken getPasswordResetToken(final String token) {
 		return passwordResetTokenRepository.findByToken(token);
 	}
-
+	
 	@Override
-	public void createPasswordResetTokenForUser(User user, String token) {
+	public void createPasswordResetTokenForUser(final User user, final String token) {
 		final PasswordResetToken myToken = new PasswordResetToken(token, user);
 		passwordResetTokenRepository.save(myToken);
 	}
-
+	
 	@Override
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
-
+	
 	@Override
-	public User findByEmail(String email) {
-		// TODO Auto-generated method stub
+	public User findById(Long id){
+		return userRepository.findOne(id);
+	}
+	
+	@Override
+	public User findByEmail (String email) {
 		return userRepository.findByEmail(email);
 	}
-
+	
 	@Override
-	public User createUser(User user, Set<UserRole> userRoles) throws Exception {
+	@Transactional
+	public User createUser(User user, Set<UserRole> userRoles){
 		User localUser = userRepository.findByUsername(user.getUsername());
-		if (localUser != null) {
-			LOG.info("user {} already exists.Nothng will be done", user.getUsername());
+		
+		if(localUser != null) {
+			LOG.info("user {} already exists. Nothing will be done.", user.getUsername());
 		} else {
 			for (UserRole ur : userRoles) {
 				roleRepository.save(ur.getRole());
 			}
+			
+			user.getUserRoles().addAll(userRoles);
 			
 			ShoppingCart shoppingCart = new ShoppingCart();
 			shoppingCart.setUser(user);
@@ -81,21 +91,17 @@ public class UserServiceImpl implements UserService {
 			user.setUserShippingList(new ArrayList<UserShipping>());
 			user.setUserPaymentList(new ArrayList<UserPayment>());
 			
-			user.getUserRoles().addAll(userRoles);
-
 			localUser = userRepository.save(user);
 		}
+		
 		return localUser;
 	}
-
-	// this save method is used in HomeController by /forgetPassword url not by
-	// repository as above
-	// because repository has built in save method
+	
 	@Override
 	public User save(User user) {
 		return userRepository.save(user);
 	}
-
+	
 	@Override
 	public void updateUserBilling(UserBilling userBilling, UserPayment userPayment, User user) {
 		userPayment.setUser(user);
@@ -105,41 +111,43 @@ public class UserServiceImpl implements UserService {
 		user.getUserPaymentList().add(userPayment);
 		save(user);
 	}
-
+	
 	@Override
-	public void setUserDefaultPayment(Long userPaymentId, User user) {
-		List<UserPayment> userPaymentList = (List<UserPayment>) userPaymentRepository.findAll();
-
-		for (UserPayment userPayment : userPaymentList) {
-			if (userPayment.getId() == userPaymentId) {
-				userPayment.setDefaultPayment(true);
-				userPaymentRepository.save(userPayment);
-			}else{
-				userPayment.setDefaultPayment(false);
-				userPaymentRepository.save(userPayment);
-			}
-		}
-	}
-
-	@Override
-	public void updateUserShipping(UserShipping userShipping, User user) {
+	public void updateUserShipping(UserShipping userShipping, User user){
 		userShipping.setUser(user);
 		userShipping.setUserShippingDefault(true);
 		user.getUserShippingList().add(userShipping);
 		save(user);
 	}
-
+	
 	@Override
-	public void setUserDefaultShipping(Long defaultShippingAddressId, User user) {
-		List<UserShipping> userShippingList = (List<UserShipping>)userShippingRepository.findAll();
+	public void setUserDefaultPayment(Long userPaymentId, User user) {
+		List<UserPayment> userPaymentList = (List<UserPayment>) userPaymentRepository.findAll();
 		
-		for(UserShipping userShipping : userShippingList){
-			if(userShipping.getId()==defaultShippingAddressId){
-				userShipping.setUserShippingDefault(true);
-			}else{
-				userShipping.setUserShippingDefault(false);
+		for (UserPayment userPayment : userPaymentList) {
+			if(userPayment.getId() == userPaymentId) {
+				userPayment.setDefaultPayment(true);
+				userPaymentRepository.save(userPayment);
+			} else {
+				userPayment.setDefaultPayment(false);
+				userPaymentRepository.save(userPayment);
 			}
-			userShippingRepository.save(userShipping);
 		}
 	}
+	
+	@Override
+	public void setUserDefaultShipping(Long userShippingId, User user) {
+		List<UserShipping> userShippingList = (List<UserShipping>) userShippingRepository.findAll();
+		
+		for (UserShipping userShipping : userShippingList) {
+			if(userShipping.getId() == userShippingId) {
+				userShipping.setUserShippingDefault(true);
+				userShippingRepository.save(userShipping);
+			} else {
+				userShipping.setUserShippingDefault(false);
+				userShippingRepository.save(userShipping);
+			}
+		}
+	}
+
 }

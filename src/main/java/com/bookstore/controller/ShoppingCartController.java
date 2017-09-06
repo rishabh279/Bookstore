@@ -30,13 +30,13 @@ public class ShoppingCartController {
 	private CartItemService cartItemService;
 	
 	@Autowired
-	ShoppingCartService shoppingCartService;
+	private BookService bookService;
 	
 	@Autowired
-	BookService bookService;
+	private ShoppingCartService shoppingCartService;
 	
 	@RequestMapping("/cart")
-	public String shoppingCart(Model model,Principal principal){
+	public String shoppingCart(Model model, Principal principal) {
 		User user = userService.findByUsername(principal.getName());
 		ShoppingCart shoppingCart = user.getShoppingCart();
 		
@@ -44,35 +44,37 @@ public class ShoppingCartController {
 		
 		shoppingCartService.updateShoppingCart(shoppingCart);
 		
-		model.addAttribute("cartItemList",cartItemList);
-		model.addAttribute("shoppingCart",shoppingCart);
+		model.addAttribute("cartItemList", cartItemList);
+		model.addAttribute("shoppingCart", shoppingCart);
 		
- 		
 		return "shoppingCart";
 	}
-	
+
 	@RequestMapping("/addItem")
-	public String addItem(@ModelAttribute("book")Book book,
-			@ModelAttribute("qty")String qty,Model model,
-			Principal principal){
-		
+	public String addItem(
+			@ModelAttribute("book") Book book,
+			@ModelAttribute("qty") String qty,
+			Model model, Principal principal
+			) {
 		User user = userService.findByUsername(principal.getName());
-		book=bookService.findOne(book.getId());
+		book = bookService.findOne(book.getId());
 		
-		if(Integer.parseInt(qty)>book.getInStockNumber()){
+		if (Integer.parseInt(qty) > book.getInStockNumber()) {
 			model.addAttribute("notEnoughStock", true);
 			return "forward:/bookDetail?id="+book.getId();
 		}
-		CartItem cartItem = cartItemService.addBookToCartItem(book,user,Integer.parseInt(qty));
+		
+		CartItem cartItem = cartItemService.addBookToCartItem(book, user, Integer.parseInt(qty));
 		model.addAttribute("addBookSuccess", true);
 		
 		return "forward:/bookDetail?id="+book.getId();
-		
 	}
 	
 	@RequestMapping("/updateCartItem")
-	public String updateShoppingCart(@ModelAttribute("id")Long cartItemId,
-			@ModelAttribute("qty")int qty){
+	public String updateShoppingCart(
+			@ModelAttribute("id") Long cartItemId,
+			@ModelAttribute("qty") int qty
+			) {
 		CartItem cartItem = cartItemService.findById(cartItemId);
 		cartItem.setQty(qty);
 		cartItemService.updateCartItem(cartItem);
@@ -81,8 +83,9 @@ public class ShoppingCartController {
 	}
 	
 	@RequestMapping("/removeItem")
-	public String removeItem(@RequestParam("id")Long id){
+	public String removeItem(@RequestParam("id") Long id) {
 		cartItemService.removeCartItem(cartItemService.findById(id));
+		
 		return "forward:/shoppingCart/cart";
 	}
 }

@@ -7,9 +7,8 @@ import com.bookstore.domain.UserPayment;
 import com.bookstore.service.PaymentService;
 
 @Service
-public class PaymentServiceImpl implements PaymentService {
-
-	@Override
+public class PaymentServiceImpl implements PaymentService{
+	
 	public Payment setByUserPayment(UserPayment userPayment, Payment payment) {
 		payment.setType(userPayment.getType());
 		payment.setHolderName(userPayment.getHolderName());
@@ -17,6 +16,7 @@ public class PaymentServiceImpl implements PaymentService {
 		payment.setExpiryMonth(userPayment.getExpiryMonth());
 		payment.setExpiryYear(userPayment.getExpiryYear());
 		payment.setCvc(userPayment.getCvc());
+		
 		return payment;
 	}
 

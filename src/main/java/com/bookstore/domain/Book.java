@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Book {
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
@@ -28,7 +28,7 @@ public class Book {
 	private String category;
 	private int numberOfPages;
 	private String format;
-	private int isbn;//unique for every book
+	private int isbn;
 	private double shippingWeight;
 	private double listPrice;
 	private double ourPrice;
@@ -41,25 +41,17 @@ public class Book {
 	@Transient
 	private MultipartFile bookImage;
 	
-	//this will return the list which contains single book belong to multiple cart item
-	@OneToMany(mappedBy="book")
+	
+	@OneToMany(mappedBy = "book")
 	@JsonIgnore
 	private List<BookToCartItem> bookToCartItemList;
- 
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getPublicationDate() {
-		return publicationDate;
-	}
-
-	public void setPublicationDate(String publicationDate) {
-		this.publicationDate = publicationDate;
 	}
 
 	public String getTitle() {
@@ -84,6 +76,14 @@ public class Book {
 
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
+	}
+
+	public String getPublicationDate() {
+		return publicationDate;
+	}
+
+	public void setPublicationDate(String publicationDate) {
+		this.publicationDate = publicationDate;
 	}
 
 	public String getLanguage() {
@@ -189,4 +189,6 @@ public class Book {
 	public void setBookToCartItemList(List<BookToCartItem> bookToCartItemList) {
 		this.bookToCartItemList = bookToCartItemList;
 	}
+	
+	
 }

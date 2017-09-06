@@ -14,52 +14,50 @@ import com.bookstore.domain.User;
 import com.bookstore.repository.BookToCartItemRepository;
 import com.bookstore.repository.CartItemRepository;
 import com.bookstore.service.CartItemService;
+
 @Service
 public class CartItemServiceImpl implements CartItemService{
-
+	
 	@Autowired
 	private CartItemRepository cartItemRepository;
 	
 	@Autowired
 	private BookToCartItemRepository bookToCartItemRepository;
 	
-	@Override
 	public List<CartItem> findByShoppingCart(ShoppingCart shoppingCart) {
-		// TODO Auto-generated method stub
 		return cartItemRepository.findByShoppingCart(shoppingCart);
 	}
-
-	@Override
+	
 	public CartItem updateCartItem(CartItem cartItem) {
 		BigDecimal bigDecimal = new BigDecimal(cartItem.getBook().getOurPrice()).multiply(new BigDecimal(cartItem.getQty()));
 		
-		bigDecimal = bigDecimal.setScale(2,BigDecimal.ROUND_HALF_UP);
-		cartItem.setSubTotal(bigDecimal);
+		bigDecimal = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP);
+		cartItem.setSubtotal(bigDecimal);
 		
 		cartItemRepository.save(cartItem);
 		
 		return cartItem;
 	}
-
-	@Override
+	
 	public CartItem addBookToCartItem(Book book, User user, int qty) {
 		List<CartItem> cartItemList = findByShoppingCart(user.getShoppingCart());
 		
-		for(CartItem cartItem:cartItemList){
-			if(book.getId()==cartItem.getBook().getId()){
+		for (CartItem cartItem : cartItemList) {
+			if(book.getId() == cartItem.getBook().getId()) {
 				cartItem.setQty(cartItem.getQty()+qty);
-				cartItem.setSubTotal(new BigDecimal(book.getOurPrice()).multiply(new BigDecimal(qty)));
+				cartItem.setSubtotal(new BigDecimal(book.getOurPrice()).multiply(new BigDecimal(qty)));
 				cartItemRepository.save(cartItem);
 				return cartItem;
 			}
 		}
+		
 		CartItem cartItem = new CartItem();
 		cartItem.setShoppingCart(user.getShoppingCart());
 		cartItem.setBook(book);
 		
 		cartItem.setQty(qty);
-		cartItem.setSubTotal(new BigDecimal(book.getOurPrice()).multiply(new BigDecimal(qty)));
-		cartItem=cartItemRepository.save(cartItem);
+		cartItem.setSubtotal(new BigDecimal(book.getOurPrice()).multiply(new BigDecimal(qty)));
+		cartItem = cartItemRepository.save(cartItem);
 		
 		BookToCartItem bookToCartItem = new BookToCartItem();
 		bookToCartItem.setBook(book);
@@ -68,16 +66,18 @@ public class CartItemServiceImpl implements CartItemService{
 		
 		return cartItem;
 	}
-
-	@Override
+	
 	public CartItem findById(Long id) {
 		return cartItemRepository.findOne(id);
 	}
-
-	@Override
+	
 	public void removeCartItem(CartItem cartItem) {
 		bookToCartItemRepository.deleteByCartItem(cartItem);
 		cartItemRepository.delete(cartItem);
 	}
 	
+	public CartItem save(CartItem cartItem) {
+		return cartItemRepository.save(cartItem);
+	}
+
 }

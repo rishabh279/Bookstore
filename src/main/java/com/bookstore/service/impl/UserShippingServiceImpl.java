@@ -8,19 +8,18 @@ import com.bookstore.repository.UserShippingRepository;
 import com.bookstore.service.UserShippingService;
 
 @Service
-public class UserShippingServiceImpl implements UserShippingService {
-
-	@Autowired
-	UserShippingRepository userShippingRepository;
+public class UserShippingServiceImpl implements UserShippingService{
 	
-	@Override
-	public void removeById(Long id) {
-		userShippingRepository.delete(id);
-	}
-
-	@Override
+	@Autowired
+	private UserShippingRepository userShippingRepository;
+	
+	
 	public UserShipping findById(Long id) {
 		return userShippingRepository.findOne(id);
 	}
 	
+	public void removeById(Long id) {
+		userShippingRepository.delete(id);
+	}
+
 }

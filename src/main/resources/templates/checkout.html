@@ -32,7 +32,7 @@
 							<button type="submit" class="btn btn-warning btn-block">Place
 								your order</button>
 							<p style="font-size: smaller;">
-								By placing your order, you agree to Bookstore <a href="#">privacy</a>
+								By placing your order, you agree to Le's Bookstore <a href="#">privacy</a>
 								notice and <a href="#">conditions</a> of use.
 							</p>
 							<hr />
@@ -102,8 +102,7 @@
 												<td
 													th:text="${userShipping.userShippingStreet1}+' '+${userShipping.userShippingStreet2}+', '+${userShipping.userShippingCity}
 												+', '+${userShipping.userShippingState}"></td>
-												<td><a
-													th:href="@{/setShippingAddress(userShippingId=${userShipping.id})}">use
+												<td><a th:href="@{/setShippingAddress(userShippingId=${userShipping.id})}">use
 														this address</a></td>
 											</tr>
 										</tbody>
@@ -142,7 +141,7 @@
 											<div class="form-group">
 												<label for="shippingState">* State</label> <select
 													id="shippingState" class="form-control"
-													th:name="shippingAddresstate"
+													th:name="shippingAddressState"
 													th:value="${shippingAddress.shippingAddressState}"
 													required="required">
 													<option value="" disabled="disabled">Please select
@@ -327,7 +326,7 @@
 										<div class="col-xs-4">
 											<div class="form-group">
 												<label for="billingState">* State</label> <select
-													id="billingState" class="form-control"
+													id="billingState" class="form-control billingAddress"
 													th:name="billingAddress"
 													th:value="${billingAddress.billingAddressState}"
 													required="required">

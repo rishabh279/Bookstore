@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bookstore.service.impl.UserSecurityService;
-	import com.bookstore.utility.SecurityUtility;
+import com.bookstore.utility.SecurityUtility;
 
 @Configuration
 @EnableWebSecurity
@@ -38,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/login",
 			"/fonts/**",
 			"/bookshelf",
-			"/bookDetail"
+			"/bookDetail/**",
+			
 	};
 
 	@Override

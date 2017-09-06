@@ -11,8 +11,9 @@ import com.bookstore.domain.ShoppingCart;
 import com.bookstore.repository.ShoppingCartRepository;
 import com.bookstore.service.CartItemService;
 import com.bookstore.service.ShoppingCartService;
+
 @Service
-public class ShoppingCartServiceImpl implements ShoppingCartService {
+public class ShoppingCartServiceImpl implements ShoppingCartService{
 	
 	@Autowired
 	private CartItemService cartItemService;
@@ -20,7 +21,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;
 	
-	@Override
 	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart) {
 		BigDecimal cartTotal = new BigDecimal(0);
 		
@@ -29,7 +29,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		for (CartItem cartItem : cartItemList) {
 			if(cartItem.getBook().getInStockNumber() > 0) {
 				cartItemService.updateCartItem(cartItem);
-				cartTotal = cartTotal.add(cartItem.getSubTotal());
+				cartTotal = cartTotal.add(cartItem.getSubtotal());
 			}
 		}
 		
@@ -38,6 +38,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		shoppingCartRepository.save(shoppingCart);
 		
 		return shoppingCart;
+	}
+	
+	public void clearShoppingCart(ShoppingCart shoppingCart) {
+		List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
+		
+		for (CartItem cartItem : cartItemList) {
+			cartItem.setShoppingCart(null);
+			cartItemService.save(cartItem);
+		}
+		
+		shoppingCart.setGrandTotal(new BigDecimal(0));
+		
+		shoppingCartRepository.save(shoppingCart);
 	}
 
 }

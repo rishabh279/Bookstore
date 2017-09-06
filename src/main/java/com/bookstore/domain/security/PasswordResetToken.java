@@ -30,8 +30,8 @@ public class PasswordResetToken {
 	
 	private Date expiryDate;
 	
-	public PasswordResetToken(){	
-	}
+	public PasswordResetToken(){}
+	
 	public PasswordResetToken(final String token, final User user) {
 		super ();
 		
@@ -39,21 +39,14 @@ public class PasswordResetToken {
 		this.user = user;
 		this.expiryDate = calculateExpiryDate(EXPIRATION);
 	}
-	//https://www.javatpoint.com/java-util-calendar
-		//https://www.tutorialspoint.com/java/util/calendar_settimeinmillis.htm
-		//https://www.mkyong.com/java/how-do-get-time-in-milliseconds-in-java/
-		//https://www.javatpoint.com/java-util-date
-		private Date calculateExpiryDate(final int expiryTimeInMinutes){
-			//this is used to get the instance of Calendar class
-			final Calendar cal = Calendar.getInstance();
-			//this is used set time in calendar miili sec
-			cal.setTimeInMillis(new java.util.Date().getTime());
-			//this is used to add 60*24 minutes to current time  
-			cal.add(Calendar.MINUTE, expiryTimeInMinutes);
-			//this is used to return the time in millisec
-			return new Date(cal.getTime().getTime());
-		}
-		
+	
+	private Date calculateExpiryDate (final int expiryTimeInMinutes) {
+		final Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(new Date().getTime());
+		cal.add(Calendar.MINUTE, expiryTimeInMinutes);
+		return new Date(cal.getTime().getTime());
+	}
+	
 	public void updateToken(final String token) {
 		this.token = token;
 		this.expiryDate = calculateExpiryDate(EXPIRATION);

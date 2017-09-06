@@ -11,14 +11,13 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Payment {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String type;
 	private String cardName;
 	private String cardNumber;
-	private int expiryDate;
 	private int expiryMonth;
 	private int expiryYear;
 	private int cvc;
@@ -27,7 +26,7 @@ public class Payment {
 	@OneToOne
 	private Order order;
 	
-	@OneToOne(cascade=CascadeType.ALL,mappedBy="userPayment")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "userPayment")
 	private UserBilling userBilling;
 
 	public Long getId() {
@@ -62,12 +61,12 @@ public class Payment {
 		this.cardNumber = cardNumber;
 	}
 
-	public int getExpiryDate() {
-		return expiryDate;
+	public int getExpiryMonth() {
+		return expiryMonth;
 	}
 
-	public void setExpiryDate(int expiryDate) {
-		this.expiryDate = expiryDate;
+	public void setExpiryMonth(int expiryMonth) {
+		this.expiryMonth = expiryMonth;
 	}
 
 	public int getExpiryYear() {
@@ -94,6 +93,13 @@ public class Payment {
 		this.holderName = holderName;
 	}
 
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 
 	public UserBilling getUserBilling() {
 		return userBilling;
@@ -102,24 +108,6 @@ public class Payment {
 	public void setUserBilling(UserBilling userBilling) {
 		this.userBilling = userBilling;
 	}
-
-	public int getExpiryMonth() {
-		return expiryMonth;
-	}
-
-	public void setExpiryMonth(int expiryMonth) {
-		this.expiryMonth = expiryMonth;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-	
-	
 	
 	
 }
